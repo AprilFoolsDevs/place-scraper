@@ -142,7 +142,7 @@ class PlaceScraper(object):
 
     def handle_batch_place(self, frame):
         for x in frame['payload']:
-            self.handle_place(frame)
+            self.handle_place(x)
 
 
 def main():
