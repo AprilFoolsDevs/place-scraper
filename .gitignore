@@ -87,3 +87,8 @@ ENV/
 
 # Rope project settings
 .ropeproject
+*.log
+*.pyc
+*.sqlite
+*.sqlite-journal
+*.csv
