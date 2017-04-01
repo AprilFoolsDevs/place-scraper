@@ -92,3 +92,4 @@ ENV/
 *.sqlite
 *.sqlite-journal
 *.csv
+foo.py
