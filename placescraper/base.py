@@ -4,6 +4,7 @@ import time
 import json
 import sqlite3
 from websocket import create_connection
+from websocket._exceptions import WebSocketConnectionClosedException
 
 
 class PlaceScraper(object):
@@ -15,8 +16,7 @@ class PlaceScraper(object):
 
     def scrape_websocket_forever(self, db_name):
         self.db_init(db_name)
-        url = self.get_place_url()
-        self.ws = create_connection(url)
+        self.ws_init()
         self.save_bitmap()  # Store the initial board
 
         while True:
@@ -33,7 +33,8 @@ class PlaceScraper(object):
                     self.handle_batch_place(frame)
                 else:
                     print('Unknown frame type: {}'.format(frame['type']))
-
+            except WebSocketConnectionClosedException:
+                self.ws_init()
             except KeyboardInterrupt:
                 print('Exiting safely...')
                 self.conn.commit()
@@ -44,20 +45,25 @@ class PlaceScraper(object):
                 print('Error occured: {} {}'.format(str(type(e)), str(e)))
 
     def read_websocket_forever(self):
-        url = self.get_place_url()
-        self.ws = create_connection(url)
+        self.ws_init()
 
         while True:
             try:
                 raw_frame = self.ws.recv_frame()
                 frame = json.loads(raw_frame.data.decode('utf-8'))
                 yield frame
+            except WebSocketConnectionClosedException:
+                self.ws_init()
             except KeyboardInterrupt:
                 print('Exiting safely...')
                 self.ws.close()
                 raise StopIteration
             except Exception as e:
                 print('Error occured: {} {}'.format(str(type(e)), str(e)))
+
+    def ws_init(self):
+        url = self.get_place_url()
+        self.ws = create_connection(url)
 
     def db_init(self, db_name):
         self.conn = sqlite3.connect(db_name)
