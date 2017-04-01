@@ -1,6 +1,8 @@
 place-scraper
 ===
 
+[![PyPI version](https://badge.fury.io/py/placescraper.svg)](https://badge.fury.io/py/placescraper)
+
 A websockets scraper for /r/place on reddit
 
 ### Installation
