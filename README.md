@@ -5,6 +5,14 @@ place-scraper
 
 A websockets scraper for /r/place on reddit
 
+This project will store:
+
+* Every pixel update recieved
+* Every activity (player count) update recieved
+* The entire 1000x1000 image after every 20,000 pixel changes
+
+Each of the above is placed in its own indexed table in a SQLite file, along with the timestamp of its arrival. Note that due to reddit's issues with server overloading, you will likely miss some pixel updates. Reddit has also been turning off the activity updates at times, so don't worry if you can't see any of those coming in.
+
 ### Installation
 You can download this package on PyPI for Python 3 with pip:
 
