@@ -22,7 +22,7 @@ $ pip3 install placescraper
 
 ### Requirements
 
-* The `websocket-client` package from PyPI
+* The `requests` and `websocket-client` packages from PyPI
 * Python 3.X
 
 ### Running the scraper
