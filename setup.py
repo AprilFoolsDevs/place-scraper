@@ -26,6 +26,7 @@ setup(
     license='MIT',
     packages=[PACKAGE_NAME],
     install_requires=[
+        'requests',
         'websocket-client',
     ],
     test_suite='nose.collector',
